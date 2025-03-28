@@ -63,7 +63,7 @@ def fill_the_form_and_store_receipts(orders: pd.DataFrame) -> None:
     Args:
         orders: DataFrame containing robot order details from the CSV file
     """
-    for i, row in orders.iterrows():
+    for _, row in orders.iterrows():
         os.makedirs("temp/receipts", exist_ok=True)
         os.makedirs("temp/receipts_images", exist_ok=True)
         browser.goto(ORDER_URL)
@@ -72,9 +72,6 @@ def fill_the_form_and_store_receipts(orders: pd.DataFrame) -> None:
         image_path = save_receipt_as_image(order_number=order_number)
         store_receipt_as_pdf(order_number=order_number, image_path=image_path)
         browser.page().close()
-
-        if i >= 2:
-            break
 
 
 def fill_the_form_for_one_order(row: pd.Series) -> str:
